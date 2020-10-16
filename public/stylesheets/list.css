@@ -1,0 +1,59 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+  }
+
+a {
+    color: #00B7FF;
+    font-size: larger;
+    text-decoration: none;
+  }
+  
+  .select {
+    right:60px;
+    text-align: center;
+    z-index:9999;
+
+  }
+  
+  .select li{
+    margin: 50px 0;
+  }
+  
+  .select a:hover{
+    background-color: #00B7FF;
+    color: white;
+  }
+
+.selectDiv{
+  border: #00B7FF solid 2px;
+  width: 200px;
+  float: right;
+  margin-right: 200px;
+  z-index: 999;
+}
+
+.select:after{
+  content: "";
+  height: 0;
+  clear: both;
+  overflow: hidden;
+  display: block;
+  visibility: hidden;
+}
+
+.table{
+  width: 60%;
+}
+.left{
+  /* position: relative; */
+  float: left;
+  overflow: hidden;
+  margin: 60px 0;
+}
+
+table{
+  border-collapse:separate;
+  border-spacing:20px 10px
+}

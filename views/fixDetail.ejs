@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        .form{
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        input{
+            vertical-align: -1px;
+            margin-bottom: 30px;
+        }
+        span{
+            display: inline-block;
+            width: 200px;
+            text-align: right;
+        }
+
+        h2{
+            text-align: center;
+            padding-left: 130px;
+            margin-top: 50px;
+        }
+
+        button{
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 >详情</h2>
+    <div class="form">
+        <span>工具编号： </span><input type="text" id="toolID" value='<%= currentToolFix[0].toolID %>'></br>
+        <span>工具名称： </span><input type="text" id="name" value='<%= currentToolFix[0].name %>'></br>
+        <span>申请人： </span><input type="text" id="people" value='<%= currentToolFix[0].people %>'></br>
+        <span>所属工具柜： </span><input type="text" id="location" value='<%= currentToolFix[0].location%>'></br>
+
+        <span>申请时间： </span><input type="text" id="fixTime" value='<%= currentToolFix[0].fixTime%>'></br>
+
+        <span>维修数量： </span><input type="text" id="fixAmount" value='<%= currentToolFix[0].fixAmount %>'></br>
+        <span>紧急程度： </span><input type="text" id="handleWays" value='<%= currentToolFix[0].handleWays %>'></br>
+        <span>报修原因： </span><textarea id="reasons" ><%= currentToolFix[0].reasons %></textarea></br></br>
+    </br>
+    √&nbsp;&nbsp;&nbsp;<button id="submit">已处理,提交</button>
+    
+    </div>
+   
+</body>
+</html>
+<script>
+            
+            var submit = document.querySelector('#submit')
+
+
+
+
+
+            //获取url参数
+            function getQueryVariable(variable){
+                    var query = window.location.search.substring(1);
+                    var vars = query.split("&");
+                    for (var i=0;i<vars.length;i++) {
+                            var pair = vars[i].split("=");
+                            if(pair[0] == variable){return pair[1];}
+                    }
+                    return(false);
+                }
+                var value = getQueryVariable("id")
+        //         //console.log(getQueryVariable("lockerid"))
+   
+            submit.addEventListener('click',function(){          
+                 // console.log(category,radioValue)
+    
+                    axios.get('/handlefixed', {
+                        params: {
+                            value:value
+                        }
+                            }).then((res)=>{
+                        alert("修改完成")
+                    })
+           })
+
+
+
+            back.addEventListener('click',function(){
+                history.back(-1)
+            })
+
+
+</script>

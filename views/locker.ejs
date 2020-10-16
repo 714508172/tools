@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel='stylesheet' href='/stylesheets/list.css' />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <style>
+      .handle{
+          margin-top: 20px;
+          margin-left: 30px;
+      }
+
+      .handle a{
+          background-color: #00B7FF;
+          color: white;
+          text-decoration: none;
+          padding: 10px;
+          border-radius: 10px;
+      }
+
+      .red{
+        margin-left: 30px;
+      }
+      .red a{
+        color: red;
+      }
+
+      .red a:hover{
+          background-color: red;
+        color: white;
+      }
+
+      .blue a{
+        color: 00B7FF;
+      }
+
+      .blue a:hover{
+          background-color:#00B7FF ;
+        color: white;
+      }
+
+      th,td{text-align:center；}
+
+      .selectDiv{
+
+  margin-top: -100px;
+}
+  </style>
+  <body>
+    <h2><%= title %></h2>
+    
+    <div class="handle">
+        <a href="./addLocker">增加工具柜</a>
+
+    </div>
+
+    <div class="left">
+
+        <table  >
+          <tr>
+            <th>智能柜编号</th><td></td>
+            <th>名称</th><td></td>
+            <th>所属群组编号</th><td></td>
+            <th>操作</th>
+        </tr>
+            <% for(let i =0; i<lockerList.length; i++){ %>
+                <tr>
+                    <td><%= lockerList[i].num %><td>
+                    <td><%= lockerList[i].name%><td>
+                        <td><%= lockerList[i].group %><td>
+                            <td class="blue"><a href='/lockerDetail?id=<%= i %>'>进入工具柜</a></td>
+                            <td class="red"><a href='/deleteLocker?id=<%= i %>' >删除</a></td>
+                </tr>
+            <%}%>
+    
+    
+        </table>
+
+    </div>
+    
+
+
+    <div class="selectDiv">
+      <ul class="select">
+          <li> <a href="./bannerUpload">图片上传</a></li>
+          <li> <a href="./bannerDelete">图片删除</a></li>
+          <li> <a href="./news">公告</a></li>
+          <li> <a href="./users">管理权限</a></li>
+          <li> <a href="./locker">工具柜管理</a></li>
+          <li> <a href="./record">记录查询</a></li>
+          <li> <a href="./fix">报修处理</a></li>
+      </ul>
+
+    </div>
+
+    <script>
+
+    </script>
+  </body>
+</html>

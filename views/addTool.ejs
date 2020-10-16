@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        .form{
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        input{
+            vertical-align: -1px;
+            margin-bottom: 30px;
+        }
+        span{
+            display: inline-block;
+            width: 200px;
+            text-align: right;
+        }
+
+        h2{
+            text-align: center;
+            padding-left: 130px;
+            margin-top: 50px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h2 >添加工具</h2>
+    <div class="form">
+        <span>工具类目： </span><input type="text" id="category"></br>
+        <span>工具名称： </span><input type="text" id="name"></br>
+        <span>工具展示图： </span><input type="file" id="uploadPic" ></br>
+        <span>工具描述： </span><input type="text" id="description"></br>
+        <span>规格设置： </span><input name="radioValue" value="uniform"  type="radio" checked="checked"/>统一规格<input name="radioValue" value="various" type="radio" />多规格</br>
+        <span>计量单位： </span><input type="text" id="unit"></br>
+        <span>工具库存： </span><input type="text" id="name">
+    </br>
+    <button id="submit">提交</button>
+    <button id="back">返回</button>
+    </div>
+   
+</body>
+</html>
+<script>
+            
+            var submit = document.querySelector('#submit')
+            var back = document.querySelector('#back')
+            var radioValueList = document.getElementsByName('radioValue')
+           // console.log(radioValueList)
+            var btn = document.querySelector('#uploadPic')
+            var param,config,fileList
+
+
+            //获取url参数
+            function getQueryVariable(variable){
+                    var query = window.location.search.substring(1);
+                    var vars = query.split("&");
+                    for (var i=0;i<vars.length;i++) {
+                            var pair = vars[i].split("=");
+                            if(pair[0] == variable){return pair[1];}
+                    }
+                    return(false);
+                }
+                var value = getQueryVariable("lockerid")
+                //console.log(getQueryVariable("lockerid"))
+
+
+            btn.onchange = function(e){
+                    fileList=e.target.files
+
+                    config = {
+                        headers:{
+                            'Content-Type':'multipart/form-data'
+                            }
+                        }
+                    }
+
+   
+            submit.addEventListener('click',function(){
+                var inputList = document.querySelectorAll('input')
+                var category =inputList[0].value
+                var name =inputList[1].value
+                var description =inputList[3].value
+                var unit =inputList[6].value
+                var num =inputList[7].value
+                var radioValue
+                for(let i = 0;i<radioValueList.length;i++){
+                    if(radioValueList[i].checked==true){
+                        radioValue = radioValueList[i].value
+                    }
+                }
+                 var file = fileList[0]
+                 //console.log(file)
+                 pa = new FormData()
+                 pa.append('file',file)
+                 axios.post('/uploadToolPic',pa,config).then((res)=>{
+                    axios.get('/handleAddTool', {
+                        params: {
+                            category:category,
+                            name: name,
+                            description:description,
+                            unit:unit,
+                            num:num,
+                            radioValue:radioValue,
+                            value:value
+                        }
+             }).then((res)=>{
+                 alert("新增完成")
+                 window.location.reload()
+             })
+                 })
+           })
+
+            back.addEventListener('click',function(){
+                history.back(-1)
+            })
+
+
+</script>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel='stylesheet' href='/stylesheets/list.css' />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h2><%= title %></h2>
+    
+    <div class="left">
+      <table  >
+        <tr>
+          <th>工具编号</th><td></td>
+          <th>工具名称</th><td></td>
+          <th>申请人</th><td></td>
+          <th>申请时间</th><td></td>
+          <th>状态</th><td></td>
+          <th>操作</th>
+      </tr>
+          <% for(let i =0; i<array.length; i++){ %>
+              <tr>
+                  <td><%= array[i].toolID %><td>
+                  <td><%= array[i].name %><td>
+                  <td><%= array[i].people%><td>
+                  <td><%= array[i].fixTime %><td>
+                  <td><%= array[i].status %><td>
+                  <td class="blue"><a href='/fixDetail?id=<%= i %>'>查看详情</a></td>
+              </tr>
+          <%}%>
+  
+  
+      </table>
+    </div>
+
+
+
+    <div class="selectDiv">
+      <ul class="select">
+          <li> <a href="./bannerUpload">图片上传</a></li>
+          <li> <a href="./bannerDelete">图片删除</a></li>
+          <li> <a href="./news">公告</a></li>
+          <li> <a href="./users">管理权限</a></li>
+          <li> <a href="./locker">工具柜管理</a></li>
+          <li> <a href="./record">记录查询</a></li>
+          <li> <a href="./fix">报修处理</a></li>
+      </ul>
+
+    </div>
+
+    <script>
+
+        
+        
+    </script>
+
+  </body>
+</html>

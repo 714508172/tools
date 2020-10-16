@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        .form{
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        input{
+            vertical-align: -1px;
+            margin-bottom: 30px;
+        }
+        span{
+            display: inline-block;
+            width: 200px;
+            text-align: right;
+        }
+
+        h2{
+            text-align: center;
+            padding-left: 130px;
+            margin-top: 50px;
+        }
+
+
+        #newsContent{
+            height: 200px;
+            width: 200px;
+            resize: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 >公告</h2>
+    <div class="form">
+        <span>标题： </span><input type="text" id="newsTitle"></br>
+        <span>图片： </span><input type="file" id="newsPic" multiple="multiple"></br>
+        <span>内容： </span><textarea id="newsContent"></textarea></br>
+    </br>
+    <button id="submit">提交</button>
+    <button id="back">返回</button>
+    </div>
+   
+</body>
+</html>
+<script>
+            
+            var submit = document.querySelector('#submit')
+            var back = document.querySelector('#back')
+           // console.log(radioValueList)
+            var btn = document.querySelector('#newsPic')
+            var param,config
+            var fileList= []
+
+            btn.onchange = function(e){
+                    fileList=e.target.files
+
+                    config = {
+                        headers:{
+                            'Content-Type':'multipart/form-data'
+                            }
+                        }
+                    }
+
+   
+            submit.addEventListener('click',function(){
+                var title = document.querySelector('input').value
+                var text = document.querySelector('textarea').value
+                var content=text.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, '&nbsp;')
+               //  console.log(title)
+                 console.log(content)
+                 pa = new FormData()
+                 var file = fileList[0]
+                 if(file==null){
+                    axios.get('/submitNews', {
+                        params: {
+                            title:title,
+                            content: content,
+                        }
+                            }).then((res)=>{
+                        alert("新增完成")
+                    })
+                  }else{
+                    pa = new FormData()
+                    pa.append('file',file)
+                 axios.post('/uploadNewsPic',pa,config).then((res)=>{
+                    axios.get('/submitNews', {
+                        params: {
+                            title:title,
+                            content: content,
+                        }
+                            }).then((res)=>{
+                        alert("新增完成")
+                    })
+                })
+                   }
+           })
+
+            back.addEventListener('click',function(){
+                history.back(-1)
+            })
+
+
+</script>

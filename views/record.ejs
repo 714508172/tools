@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel='stylesheet' href='/stylesheets/list.css' />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h2><%= title %></h2>
+    <div class="left">
+      <input name="method" type="radio" value="people" checked/>工号 
+      <input name="method" type="radio" value="toolID" />工具编号 
+         <input type="text" placeholder="在此输入" id="num" >
+        <button id="submit">确认</button>
+
+
+        <table>
+          <% if(recordList){ %>
+          <tr>
+            <th>工具编号</th><td></td>
+            <th>名称</th><td></td>
+            <th>数量</th><td></td>
+            <th>所属工具柜</th><td></td>
+            <th>借用人</th><td></td>
+            <th>借取时间</th><td></td>
+            <th>状态</th>
+        </tr>
+            <% for(let i =0; i<recordList.length; i++){ %>
+                <tr>
+                    <td><%= recordList[i].toolID %><td>
+                    <td><%= recordList[i].name %><td>
+                    <td><%= recordList[i].amount %><td>
+                    <td><%= recordList[i].location %><td>
+                    <td><%= recordList[i].people %><td>
+                    <td><%= recordList[i].data %><td>
+                    <td><%= recordList[i].status %><td>
+                </tr>
+            <%}%>
+            <%}%>
+    
+        </table>
+
+    </div>
+    
+
+
+    <div class="selectDiv">
+      <ul class="select">
+          <li> <a href="./bannerUpload">图片上传</a></li>
+          <li> <a href="./bannerDelete">图片删除</a></li>
+          <li> <a href="./news">公告</a></li>
+          <li> <a href="./users">管理权限</a></li>
+          <li> <a href="./locker">工具柜管理</a></li>
+          <li> <a href="./record">记录查询</a></li>
+          <li> <a href="./fix">报修处理</a></li>
+      </ul>
+
+    </div>
+
+    <script>
+
+      var submit = document.querySelector('#submit')
+      var num = document.getElementById('num')
+      var radioValueList = document.getElementsByName('method')
+      var radioValue
+
+
+      //console.log(groupNum.value)
+
+
+
+       submit.onclick = function(){
+        for(let i = 0;i<radioValueList.length;i++){
+                    if(radioValueList[i].checked==true){
+                        radioValue = radioValueList[i].value
+                    }
+                }
+        //console.log(radioValue)
+        var Num = num.value
+        // console.log(groupNum)
+
+        axios.get('/findrecord', {
+            params: {
+                Num: Num,
+                method:radioValue
+            }
+             }).then((res)=>{
+          if(res.data.error==0){
+              alert('输入编号错误')
+          }else{
+            window.location.reload()
+          }
+        //console.log(res)
+        })
+       }
+
+
+
+
+
+
+    </script>
+  </body>
+</html>

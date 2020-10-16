@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel='stylesheet' href='/stylesheets/list.css' />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      .red a{
+        color:red
+      }
+    </style>
+  </head>
+  <body>
+    <h2><%= title %></h2>
+    
+    <div class="left">
+        <table>
+          <tr>
+            <th>工号</th><td></td>
+            <th>姓名</th><td></td>
+            <th>所属群组编号</th><td></td>
+            <th>是否为管理员</th><td></td>
+            <th>操作</th>
+        </tr>
+        <% for(let i =0; i<userList.length; i++){ %>
+            <tr>
+                    <td><%= userList[i].num %><td>
+                    <td><%= userList[i].name %><td>
+                    <td><%= userList[i].groupnum %><td>
+                    <td><%= userList[i].admin %><td>
+                <td><a href='/set?id=<%= i %>'>设置管理员</a><td></td>
+                <td class="red"><a href='/cancel?id=<%= i %>'>取消</a><td></td>
+            </tr>
+        <%}%>
+
+
+    </table>
+    </div>
+
+
+
+    <div class="selectDiv">
+      <ul class="select">
+          <li> <a href="./bannerUpload">图片上传</a></li>
+          <li> <a href="./bannerDelete">图片删除</a></li>
+          <li> <a href="./news">公告</a></li>
+          <li> <a href="./users">管理权限</a></li>
+          <li> <a href="./locker">工具柜管理</a></li>
+          <li> <a href="./record">记录查询</a></li>
+          <li> <a href="./fix">报修处理</a></li>
+      </ul>
+
+    </div>
+
+    <script>
+
+        
+        
+    </script>
+
+  </body>
+</html>

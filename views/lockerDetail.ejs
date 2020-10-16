@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel='stylesheet' href='/stylesheets/list.css' />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <style>
+
+.drop {
+  cursor: pointer;
+  display: block;
+  background: #090;
+}
+
+.drop + input{
+ display: none; /* hide the checkboxes   Collapse 1 */
+}
+
+.drop + input + div{
+  display:none;
+}
+
+.drop + input:checked + div{
+  display:block;
+}
+
+.handle{
+          margin: 20px;
+          margin-left: 30px;
+      }
+
+      .handle a{
+          background-color: #00B7FF;
+          color: white;
+          text-decoration: none;
+          padding: 10px;
+          border-radius: 10px;
+      }
+
+      .red{
+        margin-left: 30px;
+      }
+      .red a{
+        color: red;
+      }
+
+      .red a:hover{
+          background-color: red;
+        color: white;
+      }
+
+      .blue a{
+        color: 00B7FF;
+      }
+
+      .blue a:hover{
+          background-color:#00B7FF ;
+        color: white;
+      }
+
+      .selectDiv{
+
+  margin-top: -100px;
+}
+      
+  </style>
+  <body>
+    <h2><%= title %></h2>
+    <div class="handle">
+      <a href="./addTool?lockerid=<%= value %>">增加工具</a>
+
+  </div >
+
+        <table>
+          <tr>
+            <th>工具编号</th><td></td>
+            <th>名称</th><td></td>
+            <th>数量</th><td></td>
+            <th>所属工具柜</th><td></td>
+            <th>操作</th>
+        </tr>
+            <% for(let i =0; i<toolList.length; i++){ %>
+                <tr>
+                    <td><%= toolList[i].toolID %><td>
+                    <td><%= toolList[i].name %><td>
+                    <td><%= toolList[i].num %><td>
+                    <td><%= toolList[i].location %><td>
+                      <td class="blue"><a href='/updateTool?lockerid=<%= value %>&toolid=<%= i %>'>修改工具信息</a><td></td>
+                      <td class="red"><a href='/deleteTool?lockerid=<%= value %>&toolid=<%= i %>' >删除</a><td></td>
+                </tr>     
+
+            <%}%>
+    
+        </table>
+
+
+
+
+
+
+    </div>
+    
+
+
+    <div class="selectDiv">
+      <ul class="select">
+          <li> <a href="./bannerUpload">图片上传</a></li>
+          <li> <a href="./bannerDelete">图片删除</a></li>
+          <li> <a href="./news">公告</a></li>
+          <li> <a href="./users">管理权限</a></li>
+          <li> <a href="./locker">工具柜管理</a></li>
+          <li> <a href="./record">记录查询</a></li>
+          <li> <a href="./fix">报修处理</a></li>
+      </ul>
+
+    </div>
+
+    <script>
+
+    </script>
+  </body>
+</html>

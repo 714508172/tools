@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        .form{
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        input{
+            vertical-align: -1px;
+            margin-bottom: 30px;
+        }
+        span{
+            display: inline-block;
+            width: 200px;
+            text-align: right;
+        }
+
+        h2{
+            text-align: center;
+            padding-left: 130px;
+            margin-top: 50px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h2 >更新工具</h2>
+    <div class="form">
+        <span>工具类目： </span><input type="text" id="category" value='<%= currentTool[0].category %>'></br>
+        <span>工具名称： </span><input type="text" id="name" value='<%= currentTool[0].name %>'></br>
+        <span>工具展示图： </span><input type="file" id="uploadPic" multiple="multiple"></br>
+        <span>工具描述： </span><input type="text" id="description" value='<%= currentTool[0].description%>'></br>
+
+        <span>规格设置： </span><input name="radioValue" value="uniform"  type="radio" />统一规格<input name="radioValue" value="various" type="radio" />多规格</br>
+
+        <span>计量单位： </span><input type="text" id="unit" value='<%= currentTool[0].unit %>'></br>
+        <span>工具库存： </span><input type="text" id="num" value='<%= currentTool[0].num %>'>
+    </br>
+    <button id="submit">提交</button>
+    <button id="back">返回</button>
+    </div>
+   
+</body>
+</html>
+<script>
+            
+            var submit = document.querySelector('#submit')
+             var back = document.querySelector('#back')
+             var radioValueList = document.getElementsByName('radioValue')
+             var value ='<%= currentTool[0].radioValue %>'
+             //console.log(value)
+             if(value==radioValueList[0].value){
+                 radioValueList[0].checked ='checked'
+             }else{
+                 radioValueList[1].checked='checked'
+             }
+             var btn = document.querySelector('#uploadPic')
+             var param,config,fileList
+
+
+            //获取url参数
+            function getQueryVariable(variable){
+                    var query = window.location.search.substring(1);
+                    var vars = query.split("&");
+                    for (var i=0;i<vars.length;i++) {
+                            var pair = vars[i].split("=");
+                            if(pair[0] == variable){return pair[1];}
+                    }
+                    return(false);
+                }
+                var value = getQueryVariable("toolid")
+        //         //console.log(getQueryVariable("lockerid"))
+
+            var fileList
+            btn.onchange = function(e){
+                    fileList=e.target.files
+                    config = {
+                        headers:{
+                            'Content-Type':'multipart/form-data'
+                            }
+                        }
+                    }
+
+   
+            submit.addEventListener('click',function(){
+                var inputList = document.querySelectorAll('input')
+                var category =inputList[0].value
+                var name =inputList[1].value
+                var description =inputList[3].value
+                var unit =inputList[6].value
+                var num =inputList[7].value
+                var radioValue
+                for(let i = 0;i<radioValueList.length;i++){
+                    if(radioValueList[i].checked==true){
+                        radioValue = radioValueList[i].value
+                    }
+                }
+                 
+                 // console.log(category,radioValue)
+                  if(fileList==null){
+                    axios.get('/handleUpdataTool', {
+                        params: {
+                            category:category,
+                            name: name,
+                            description:description,
+                            unit:unit,
+                            num:num,
+                            radioValue:radioValue,
+                            value:value
+                        }
+                            }).then((res)=>{
+                        alert("修改完成")
+                    })
+                  }else{
+                    var file = fileList[0]
+                    pa = new FormData()
+                    pa.append('file',file)
+                 axios.post('/handleUpdatePic',pa,config).then((res)=>{
+                    axios.get('/handleUpdataTool', {
+                        params: {
+                            category:category,
+                            name: name,
+                            description:description,
+                            unit:unit,
+                            num:num,
+                            radioValue:radioValue,
+                            value:value
+                        }
+                            }).then((res)=>{
+                        alert("修改完成")
+                    })
+                })
+                  }
+           })
+
+
+
+            back.addEventListener('click',function(){
+                history.back(-1)
+            })
+
+
+</script>
